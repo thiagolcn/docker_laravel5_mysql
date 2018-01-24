@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  laravel:
+    container_name: laravel
+    build:
+      context: ./build/laravel/
+      args:
+        LARAVEL_PROJECT_NAME: "arbitrator"
+        HOST_IP: "10.13.21.7"
+    ports:
+      - "8080:80"
+    links:
+      - mysql
+    env_file:
+      - env
+    depends_on:
+      - mysql
+    volumes:
+     - ./Code:/var/www/html
+  mysql:
+    build: ./build/mysql/
+    ports:
+      - "3306:3306"
+    env_file:
+      - env
+    volumes:
+     - ./SqlData:/var/lib/mysql
